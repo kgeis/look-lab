@@ -7,7 +7,18 @@ var colors = {
     forest: ['#006400', '#7a5230'],
     algae: ['#adff00', '#74d600', '#028900', '#00d27f', '#00ff83'],
     rainbow: ['#00b159', '#00aedb', '#f37735', '#ffc425'],
-    pastels: ['#1b85b8', '#559e83', '#c3cb71', '#ae5a41']
+    pastels: ['#1b85b8', '#559e83', '#c3cb71', '#ae5a41'],
+    blueToYellow: [
+        "#226666", // teal
+        "#00F000", // green
+        "#FFFF00", // yellow
+        "#1465E6"  // blue
+    ],
+    unicornVomit: [
+        "#F10088", // pink
+        "#FFFF00", // yellow again
+        "#1D35E8"  // different blue
+    ]
 };
 
 function gradientColorStopsString () {
