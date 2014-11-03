@@ -1,3 +1,15 @@
+var colors = {
+    tequilaSunrise: ["#eaec25", "#ed4faf", "#4fafed"],
+    ocean: ["#0099cc", "#EDC9AF", "#004444"],
+    hightlighter: ["#80ff00", "#00ffff", "#FFFF00"],
+    carbonSky: ["#afe8f6", "#a3a3a3"],
+    stawberry: ['#800000', '#ff6666'],
+    forest: ['#006400', '#7a5230'],
+    algae: ['#adff00', '#74d600', '#028900', '#00d27f', '#00ff83'],
+    rainbow: ['#00b159', '#00aedb', '#f37735', '#ffc425'],
+    pastels: ['#1b85b8', '#559e83', '#c3cb71', '#ae5a41']
+};
+
 function gradientColorStopsString () {
     colors = arguments;
     var toReturn = "";
