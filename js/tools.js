@@ -1,4 +1,4 @@
-var colors = {
+var colorsMap = {
     tequilaSunrise: ["#eaec25", "#ed4faf", "#4fafed"],
     ocean: ["#0099cc", "#EDC9AF", "#004444"],
     hightlighter: ["#80ff00", "#00ffff", "#FFFF00"],
@@ -22,7 +22,7 @@ var colors = {
 };
 
 function gradientColorStopsString () {
-    colors = arguments;
+    var colors = arguments;
     var toReturn = "";
     for (var i = 0; i < colors.length; i++) {
         toReturn += colors[i] + '-';
@@ -31,7 +31,7 @@ function gradientColorStopsString () {
 }
 
 function inBounds (point, width, height) {
-    return point.x <= width && point.y >= 0 && point.y <= height;
+    return point.x <= width && point.x >= 0 && point.y >= 0 && point.y <= height;
 }
 
 function cutoff (currentLocation, height) {
@@ -60,7 +60,25 @@ function resetX (currentLocation, stepSize) {
     return {x: dx, y: currentLocation.y};
 }
 
-function mirror (point, width) {
+function mirrorPolygonArray (polygonArray, width) {
+    var mirroredPolygons = [];
+    for (var i = polygonArray.length - 1; i >= 0; i--) {
+        var currentPolygon = polygonArray[i];
+        mirroredPolygons.push( mirrorPolygon(currentPolygon, width) );
+    };
+    return mirroredPolygons;
+}
+
+function mirrorPolygon (polygonPoints, width) {
+    var mirroredPoints = [];
+    for (var i = polygonPoints.length - 1; i >= 0; i--) {
+        var currentPoint = polygonPoints[i];
+        mirroredPoints.push( mirrorPoint(currentPoint, width) );
+    }
+    return mirroredPoints;
+}
+
+function mirrorPoint (point, width) {
     return {x: width - point.x, y: point.y};
 }
 
@@ -92,5 +110,56 @@ function step (point, dx, dy) {
     return {
         x: point.x + dx,
         y: point.y + dy
+    };
+}
+
+function pointsArrayToArrayForSnap (points) {
+    var toReturn = [];
+    for (var i = 0; i < points.length; i++) {
+        toReturn[2 * i] = points[i].x;
+        toReturn[2 * i + 1] = points[i].y;
+    }
+    return toReturn;
+}
+
+// This method works by considering the circle upon which both other points of the
+// traingle have to fall (because two sides of an isosceles triangle have the same
+// length). It assumes center lies in the center of the circle (find for current
+// purposes) First, it finds the angle to the side given by the two points. Then,
+// it adds the supplied angle to that angle and finds the other point of the
+// triangle, returning all points as an array of [x1, y1, x2, ...], suitable
+// for a Snap.polygon call.
+function isoscelesTriangleFromTwoPointsAndAngle (center, startingRadialPoint, angleInRad) {
+    var radius = Math.sqrt(
+        Math.pow(center.x - startingRadialPoint.x, 2) +
+        Math.pow(center.y - startingRadialPoint.y, 2)
+    );
+
+    var smallestAngleToReadyStartingRadialPoint = Math.acos( (startingRadialPoint.x - center.x) / radius );
+    var angleTostartingRadialPoint
+
+    // Well this is bullshit. The acos function returns the smallest possible angle,
+    // instead of returning a unique angle for each point on the circle. At least
+    // the way I'm using it does ;-)
+    if (startingRadialPoint.y > center.y) {
+        angleTostartingRadialPoint = smallestAngleToReadyStartingRadialPoint;
+    }
+    else {
+        angleTostartingRadialPoint = Math.PI + Math.PI - smallestAngleToReadyStartingRadialPoint;
+    }
+
+    var angleToP3 = angleTostartingRadialPoint + angleInRad;
+    var dx = Math.cos(angleToP3) * radius;
+    var dy = Math.sin(angleToP3) * radius;
+    return {x: center.x + dx, y: center.y + dy};
+}
+
+function drawPolygonPointsWithColors (brush, polygonPoints, colors) {
+    for (var i = polygonPoints.length - 1; i >= 0; i--) {
+        var toDraw = pointsArrayToArrayForSnap(polygonPoints[i]);
+        var fill = colors[i % colors.length];
+        brush.polyline(toDraw).attr({
+            fill: fill
+        });
     };
 }
