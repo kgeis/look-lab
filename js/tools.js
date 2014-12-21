@@ -163,3 +163,17 @@ function drawPolygonPointsWithColors (brush, polygonPoints, colors) {
         });
     };
 }
+
+function drawLineAtAngle (brush, startPoint, angle, length, mirror) {
+    var endPoint = { x: startPoint.x + Math.cos(angle) * length,
+                     y: startPoint.y + Math.sin(angle) * length };
+    brush.line(startPoint.x, startPoint.y, endPoint.x, endPoint.y)
+        .attr({ stroke: '#000', strokeWidth: 5, 'stroke-linecap': 'round' });
+
+    // Now to mirror
+    if (mirror) {
+        var mirroredEnd = mirrorPoint(startPoint, width);
+        var mirroredAngle = Math.PI + angle - angle * 2;
+        drawLineAtAngle(brush, mirroredEnd, mirroredAngle, length, false);
+    }
+}
