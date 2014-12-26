@@ -187,8 +187,27 @@ function drawPolygonPoints (brush, points, attrs, mirror) {
 
     if (mirror) {
         var mirroredPoints = mirrorPolygon(points, width);
-        brush.polygon(
-            pointsArrayToArrayForSnap(mirroredPoints)
-        ).attr(attrs);
+        drawPolygonPoints(brush, mirroredPoints, attrs, false);
     }
+}
+
+// Similar to above. Angle 0 is a triangle with the point directly down.
+function drawIsoscelesTriangleWithTopAngleAtAngle (brush, bottomCenter, length, topAngle, triAngle, attrs, mirror) {
+    var p1 = { x: bottomCenter.x + length / 2 * Math.cos(triAngle),
+               y: bottomCenter.y + length / 2 * Math.sin(triAngle) };
+
+    var p2Angle = triAngle + Math.PI;
+    var p2 = { x: bottomCenter.x + length / 2 * Math.cos(p2Angle),
+               y: bottomCenter.y + length / 2 * Math.sin(p2Angle) };
+
+    var p3Angle = triAngle + Math.PI / 2;
+    var lengthForP3 = length / ( 2 * Math.tan(topAngle / 2) );
+    var p3 = { x: bottomCenter.x + lengthForP3 * Math.cos(p3Angle),
+               y: bottomCenter.y + lengthForP3 * Math.sin(p3Angle) };
+
+    drawPolygonPoints(brush, [p1, p2, p3], attrs, mirror);
+}
+
+function drawEquilateralTriangleAtAngle (brush, bottomCenter, sideLength, angle, attrs, mirror) {
+    drawIsoscelesTriangleWithTopAngleAtAngle(brush, bottomCenter, sideLength, Math.PI / 3, angle, attrs, mirror);
 }
