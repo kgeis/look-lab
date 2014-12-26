@@ -177,3 +177,18 @@ function drawLineAtAngle (brush, startPoint, angle, length, mirror, attrs) {
         drawLineAtAngle(brush, mirroredEnd, mirroredAngle, length, false, attrs);
     }
 }
+
+// Input: brush, [ {x: __, y: __ }, ... ], attrs map, mirror
+// Output: shapes on <SVG>
+function drawPolygonPoints (brush, points, attrs, mirror) {
+    brush.polygon(
+        pointsArrayToArrayForSnap(points)
+    ).attr(attrs);
+
+    if (mirror) {
+        var mirroredPoints = mirrorPolygon(points, width);
+        brush.polygon(
+            pointsArrayToArrayForSnap(mirroredPoints)
+        ).attr(attrs);
+    }
+}
