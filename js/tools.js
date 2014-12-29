@@ -224,3 +224,14 @@ function polkaDotPointsWithStepSize (stepSize) {
     }
     return polkaDots;
 }
+
+function drawLinesFromPointBetweenAngles (brush, point, startAngle, endAngle, length, numberOfLines, mirror, attrs) {
+    var angleSubtended = startAngle - endAngle;
+    var angleStep = angleSubtended / numberOfLines;
+    for (var i = numberOfLines; i >= 0; i--) {
+        var lineAngleDelta = angleStep * (numberOfLines - i) + (1 - 2 * Math.random()) * angleStep;
+        var lineAngle = startAngle + lineAngleDelta;
+
+        drawLineAtAngle(brush, point, lineAngle, length, mirror, attrs);
+    }
+}
