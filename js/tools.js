@@ -240,3 +240,10 @@ function drawLinesFromPointBetweenAngles (brush, point, startAngle, endAngle, le
         drawLineAtAngle(brush, point, lineAngle, length, mirror, attrs);
     }
 }
+
+function jitterValueByPercentage (value, percentage, plusMinus) {
+    var decimal = percentage / 100;
+    var base = 1;
+    if (plusMinus) base = 0;
+    return value * ( (base + decimal) - 2 * decimal * Math.random());
+}
