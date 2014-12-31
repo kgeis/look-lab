@@ -18,7 +18,12 @@ var colorsMap = {
         "#F10088", // pink
         "#FFFF00", // yellow again
         "#1D35E8"  // different blue
-    ]
+    ],
+    neonRainbow: ['#fdff00', '#32fffa', '#fd18ff', '#00ff11'],
+    greys: ['#bbb', '#444', '#888', '#000'],
+    fire: ['#fdcf58', '#757676', '#f27d0c', '#800909', '#f07f13'],
+    sherlock: ['#383838', '#2d5867', '#1e2e4d', '#000d11', '#2c003a'],
+    blues: ['#E7EFF6', '#6497b1', '#005b96', '#03396c', '#011f4b']
 };
 
 function gradientColorStopsString () {
