@@ -249,3 +249,27 @@ function jitterValueByPercentage (value, percentage, plusMinus) {
     if (plusMinus) base = 0;
     return value * ( (base + decimal) - 2 * decimal * Math.random());
 }
+
+function drawZigZag (brush, xStep, yStep, yStart, mirror, attrs) {
+    var x = 0;
+    var points = [];
+    var rightBoundary = width;
+    if (mirror) rightBoundary = width / 2;
+
+    while (x < rightBoundary) {
+        if ((x / xStep) % 2 === 1) {
+            y = yStart + yStep;
+        }
+        else {
+            y = yStart;
+        }
+        points.push({x: x, y: y});
+        x += xStep;
+    }
+
+    brush.polyline( pointsArrayToArrayForSnap(points) ).attr(attrs);
+
+    if (mirror) {
+        brush.polyline( pointsArrayToArrayForSnap( mirrorPolygon(points, width) ) ).attr(attrs);
+    }
+}
