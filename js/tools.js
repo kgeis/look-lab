@@ -1,3 +1,5 @@
+// MANY of the color schemes here were pulled from user-generated pallettes on
+// www.color-hex.com
 var colorsMap = {
     tequilaSunrise: ["#eaec25", "#ed4faf", "#4fafed"],
     ocean: ["#0099cc", "#EDC9AF", "#004444"],
@@ -24,7 +26,19 @@ var colorsMap = {
     fire: ['#fdcf58', '#757676', '#f27d0c', '#800909', '#f07f13'],
     sherlock: ['#383838', '#2d5867', '#1e2e4d', '#000d11', '#2c003a'],
     blues: ['#E7EFF6', '#6497b1', '#005b96', '#03396c', '#011f4b'],
-    seahawks: ['#002244', '#69BE28', '#A5ACAF']
+    seahawks: ['#002244', '#69BE28', '#A5ACAF'],
+    seriousPink: ['#a3294e', '#ad1f49', '#5c0a22', '#c20a41', '#db4c77'],
+    radial: ['#eadd65', '#ea4646', '#357385', '#000000', '#83257f'],
+    happyPastels: ['#00ffff', '#33ff99', '#ff99cc', '#ffff99', '#ff6666'],
+    matchFlame: ['#3041f3', '#6c6675', '#ae9b89', '#edcf9c', '#f9f9b3'],
+    purples: ['#501f72', '#9277ae', '#69398b', '#9a7fa9', '#3e0254'],
+    morePastels: ['#a5f59a', '#98a3f2', '#f2b894', '#97f4e9', '#f2e898'],
+    brightDesert: ['#ffff80', '#c0ff80', '#ffc080', '#80c0ff', '#b0b0b0'],
+    fallLeaves: ['#cbff8c', '#e3e36a', '#c16200', '#881600', '#4e0110'],
+    sage: ['#89a48e', '#6e8a73', '#646464', '#acd5b4', '#424242'],
+    teals: ['#2a675c', '#327b6e', '#3a9080', '#43a493', '#4bb9a5'],
+    fallLove: ['#842c5a', '#842c44', '#852c2e', '#84402c', '#84562c'],
+    tvTestPattern: ['#00ff5e', '#ffeb2a', '#ff0074', '#00b8ff', '#290000']
 };
 
 function gradientColorStopsString () {
