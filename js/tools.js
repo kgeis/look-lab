@@ -223,7 +223,7 @@ function polkaDotPointsWithStepSize (stepSize, leftLegOnly) {
     var point = {x: 0, y: 0};
     var rightBoundary = width;
     if (leftLegOnly) rightBoundary = width / 2;
-    while(inBounds(point, width, height)) {
+    while(inBounds(point, width, height * 1.1)) {
         polkaDots.push(point);
         point = stepRight(point, stepSize);
         if(point.x > rightBoundary) {
@@ -273,4 +273,16 @@ function drawZigZag (brush, xStep, yStep, yStart, mirror, attrs) {
     if (mirror) {
         brush.polyline( pointsArrayToArrayForSnap( mirrorPolygon(points, width) ) ).attr(attrs);
     }
+}
+
+function hexagonPointsAtAngle (point, radius, angle) {
+    var points = [];
+    for (var i = 0; i < 6; i++) {
+        points.push({
+            x: point.x + radius * Math.cos(angle),
+            y: point.y + radius * Math.sin(angle)
+        });
+        angle += Math.PI / 3;
+    }
+    return points;
 }
