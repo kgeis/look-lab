@@ -92,6 +92,8 @@ function draw (brush, width, height) {
     //         fontSize: "100"
     //     });
 
+    console.log(getNRandomlyDistributedCirclesWithMaximumRadius(100, 100));
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -300,3 +300,99 @@ function hexagonPointsAtAngle (point, radius, angle) {
     }
     return points;
 }
+
+function getNRandomlyDistributedCirclesWithMaximumRadius (n, maxRad) {
+    var circles = [];
+    for (var i = n - 1; i >= 0; i--) {
+        circles.push( getNextCircleData() );
+    }
+    return circles;
+}
+
+function getNextCircleData () {
+    var keeper,
+        candidate;
+    for (var i = samples - 1; i >= 0; i--) {
+        candidate = randomPoint(width, height);
+
+        if (circlesToDraw.length === 0) {
+            candidate.r = maxRadius;
+            return candidate;
+        }
+        else {
+            var closestCircle = getClosestCircle(candidate);
+            var distanceBetweenCandidateAndCircle = calculateDistanceBetweenPoints(closestCircle, candidate);
+            if (!keeper || keeper.distance < distanceBetweenCandidateAndCircle) {
+                keeper = candidate;
+                keeper.distance = distanceBetweenCandidateAndCircle;
+                keeper.circle = closestCircle;
+            }
+        }
+    }
+
+    keeper.r = calculateKeeperRadius(keeper);
+    return keeper;
+}
+
+function randomPoint (width, height) {
+    return {
+        x: Math.random() * width,
+        y: Math.random() * height
+    };
+}
+
+function getClosestCircle (candidate) {
+    var closestCircle,
+        potentialClosest,
+        closestDistance,
+        distance;
+    for (var i = circlesToDraw.length - 1; i >= 0; i--) {
+        potentialClosest = circlesToDraw[i];
+        distance = calculateDistanceBetweenPoints(potentialClosest, candidate);
+        if (!closestDistance || closestDistance > distance) {
+            closestDistance = distance;
+            closestCircle = potentialClosest;
+        }
+    }
+    return closestCircle;
+}
+
+function calculateDistanceBetweenPoints (p1, p2) {
+    return Math.sqrt( Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2) );
+}
+
+function pathForImperfectCircleWithRadius (cx, cy, r) {
+    var pieces = 30;
+
+    var circlePoints = [];
+    for (var i = 0; i < pieces; i++) {
+        var circleAngle = i * 2 * Math.PI / pieces;
+        var dr = plusOrMinusRange(r / 35);
+        circlePoints.push([cx + Math.cos(circleAngle) * r + dr, cy + Math.sin(circleAngle) * r + dr, dr]);
+    }
+
+    var string = "M" + circlePoints[0][0] + ', ' + circlePoints[0][1];
+
+    for (i = 0; i < pieces + 1; i++) {
+        var index = i % pieces;
+        var deltaR = circlePoints[index][2];
+        var pointDelta = Math.pow(Math.abs(deltaR), 0.3);
+        string += " A" + (r + deltaR) + ', ' + (r + deltaR) + ' 0 0 1 ' + (circlePoints[index][0]) + ', ' + (circlePoints[index][1]);
+    }
+
+    return string;
+}
+
+function plusOrMinusRange (n) {
+    return n * ( Math.random() * 2 - 1);
+}
+
+function calculateKeeperRadius (keeper) {
+    var distanceToClosestCircle = keeper.distance - keeper.circle.r;
+    if (distanceToClosestCircle < maxRadius) {
+        return distanceToClosestCircle - padding;
+    }
+    else {
+        return maxRadius - padding;
+    }
+}
