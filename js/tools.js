@@ -232,16 +232,17 @@ function drawEquilateralTriangleAtAngle (brush, bottomCenter, sideLength, angle,
     drawIsoscelesTriangleWithTopAngleAtAngle(brush, bottomCenter, sideLength, Math.PI / 3, angle, attrs, mirror);
 }
 
-function polkaDotPointsWithStepSize (stepSize, leftLegOnly) {
+function polkaDotPointsWithStepSize (deltaX, leftLegOnly, deltaY) {
+    if (deltaY === undefined) deltaY = deltaX;
     var polkaDots = [];
     var point = {x: 0, y: 0};
     var rightBoundary = width;
     if (leftLegOnly) rightBoundary = width / 2;
     while(inBounds(point, width, height * 1.1)) {
         polkaDots.push(point);
-        point = stepRight(point, stepSize);
+        point = stepRight(point, deltaX);
         if(point.x > rightBoundary) {
-            point = stepRight(nextRow(point, stepSize), stepSize);
+            point = stepRight( resetX( stepDown(point, deltaY), deltaX ), deltaX );
         }
     }
     return polkaDots;
