@@ -345,6 +345,25 @@ function randomPoint (width, height) {
     };
 }
 
+function getNClosestPoints (point, points, n) {
+    for (var i = points.length - 1; i >= 0; i--) {
+        var thisPoint = points[i];
+        thisPoint.d = calculateDistanceBetweenPoints(point, thisPoint);
+    }
+
+    points.sort(function(p1, p2) {
+        if (p1.d < p2.d) {
+            return -1;
+        }
+        if (p1.d > p2.d) {
+            return 1;
+        }
+        return 0;
+    });
+
+    return points.slice(0, n);
+}
+
 function getClosestCircle (candidate, circles) {
     var closestCircle,
         potentialClosest,
