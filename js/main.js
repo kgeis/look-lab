@@ -49,15 +49,16 @@ function draw (brush, width, height) {
     // subtly.
     Math.seedrandom('bombsheller');
 
+    colors = colorsMap.unicornVomit;
+
     // We start by making a couple of gradients because vector gradients rock.
     topToBottom = brush.gradient(
-        Snap.format("L({x1}, {y1}, {x2}, {y2}){c1}-{c2}", {
+        Snap.format("L({x1}, {y1}, {x2}, {y2}){colorsString}", {
                     x1: 0,
                     y1: 0,
                     x2: 0,
                     y2: height,
-                    c1: "#e6ab5a",
-                    c2: "#51388F"
+                    colorsString: gradientColorStopsString(colors)
     }));
 
     bottomToTop = brush.gradient(
@@ -72,7 +73,7 @@ function draw (brush, width, height) {
 
     // Background gradient
     square = brush.rect(0, 0, width, height);
-    square.attr({fill: topToBottom});
+    square.attr({fill: "#000"});
 
     // Path string for the XS leggings template outline. Helps remove paths
     // that aren't completely on the leggings (so seams are less noticable).
@@ -80,21 +81,32 @@ function draw (brush, width, height) {
 
     // Other layers on top of the background. Uncomment to see what they do.
 
-    // Stripes.
-    // You can type stripes into the console to add more shapes to the group.
-    // stripes = brush.g();
-    // var fraction = width / 24;
-    // for (var i = 0; i < 24; i++) {
-    //     var x = i * fraction;
-    //     var lineWidth = fraction / 2;
-    //     stripes.rect(x, 0, lineWidth, height);
-    // };
+    var numRects = 50;
+    var stepSize = height / numRects;
+    var rectWidth = 99;
+    var numColumns = width / rectWidth;
+    var attrs = {fill: topToBottom};
 
-    // Text.
-    // shells = brush.text(500, 500, "#SHELLS")
-    //     .attr({
-    //         fontSize: "100"
-    //     });
+    for (var j = numColumns; j >= 0; j--) {
+        var x = j * rectWidth;
+
+        if (j % 2 > 1) {
+            var h = function (i) {
+                return i / numRects * stepSize;
+            };
+        }
+        else {
+            h = function (i) {
+                return (1 - i / numRects) * stepSize;
+            };
+        }
+
+        for (var i = numRects; i >= 0; i--) {
+            var y = i * stepSize;
+            brush.rect(x, y, rectWidth * 0.9, h(i)).attr(attrs);
+        }
+
+    }
 
 }
 

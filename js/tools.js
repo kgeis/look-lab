@@ -1,7 +1,7 @@
 // MANY of the color schemes here were pulled from user-generated pallettes on
 // www.color-hex.com
 var colorsMap = {
-    tequilaSunrise: ["#eaec25", "#ed4faf", "#4fafed"],
+    tequilaSunrise: ["#eaec25", "#4fafed", "#ed4faf"],
     ocean: ["#0099cc", "#EDC9AF", "#004444"],
     hightlighter: ["#80ff00", "#00ffff", "#FFFF00"],
     carbonSky: ["#afe8f6", "#a3a3a3"],
@@ -17,9 +17,9 @@ var colorsMap = {
         "#1465E6"  // blue
     ],
     unicornVomit: [
-        "#F10088", // pink
         "#FFFF00", // yellow again
-        "#1D35E8"  // different blue
+        "#1D35E8",  // different blue
+        "#F10088", // pink
     ],
     neonRainbow: ['#fdff00', '#32fffa', '#fd18ff', '#00ff11'],
     greys: ['#bbb', '#444', '#888', '#000'],
@@ -41,8 +41,7 @@ var colorsMap = {
     tvTestPattern: ['#00ff5e', '#ffeb2a', '#ff0074', '#00b8ff', '#290000']
 };
 
-function gradientColorStopsString () {
-    var colors = arguments;
+function gradientColorStopsString (colors) {
     var toReturn = "";
     for (var i = 0; i < colors.length; i++) {
         toReturn += colors[i] + '-';
