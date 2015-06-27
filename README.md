@@ -45,8 +45,8 @@ across on an XS print of your design, but more like 1.3 inches in an M.
    branches. Copy-pasting this file into a folder with the design works, too.
 5. Import design into Bombsheller's Adobe Illustrator template found at
    http://bombsheller.com/download-the-template.html one .ai file per variant.
-   Hopefully you won't have to do this soon, but rigt now it's a necessary evil.
-   If you use any of SVGs filter effects in your design you'll have to use a
+   Hopefully you won't have to do this soon, but right now it's a necessary evil.
+   If you use any of SVG's filter effects in your design you'll have to use a
    rasterizer to render your SVG to an image format to import. We've seen
    success with webkit2png, found here: https://github.com/paulhammond/webkit2png.
    We're exploring other rasterizers and are open to suggestions!
